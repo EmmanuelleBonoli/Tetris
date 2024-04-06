@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-// const { hashPassword, verifyToken } = require("./services/auth");
+const { hashPassword, verifyToken } = require("./services/auth");
 
 /* ************************************************************************* */
 // Define Your API Routes Here
@@ -12,14 +12,14 @@ const router = express.Router();
 // const appointmentControllers = require("./controllers/appointmentControllers");
 // const coWorkerControllers = require("./controllers/coWorkerControllers");
 // const meetingControllers = require("./controllers/meetingControllers");
-// const userControllers = require("./controllers/userControllers");
+const userControllers = require("./controllers/userControllers");
 
-// router.post("/user/login", userControllers.login);
-// router.post("/user/signin", hashPassword, userControllers.signin);
+router.post("/user/login", userControllers.login);
+router.post("/user/signin", hashPassword, userControllers.signin);
 // /* ************************************************************************* */
 
-// router.use(verifyToken);
-// router.get("/user/userbytoken", userControllers.getByToken);
+router.use(verifyToken);
+router.get("/user/userbytoken", userControllers.getByToken);
 // router.get("/user/checkExistence", userControllers.checkExistence);
 // router.get(
 //   "/appointment/Allappointments/:id",

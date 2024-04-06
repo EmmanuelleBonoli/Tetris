@@ -3,13 +3,13 @@
 /* ************************************************************************* */
 
 // Import the manager modules responsible for handling data operations on the tables
-// const UserManager = require("./models/UserManager");
+const UserManager = require("./models/UserManager");
 // const AppointmentManager = require("./models/AppointmentManager");
 // const MeetingManager = require("./models/MeetingManager");
 // const CoworkerManager = require("./models/CoworkerManager");
 
 const managers = [
-  // UserManager,
+  UserManager,
   // AppointmentManager,
   // CoworkerManager,
   // MeetingManager,
@@ -37,7 +37,7 @@ module.exports = new Proxy(tables, {
 
     // If the property (table) does not exist, throw a ReferenceError with a custom error message
     throw new ReferenceError(
-      `tables.${prop} is not defined. Did you register it in ${__filename}?`,
+      `tables.${prop} is not defined. Did you register it in ${__filename}?`
     );
   },
 });
