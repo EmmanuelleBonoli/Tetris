@@ -5,16 +5,21 @@ const tables = require("../tables");
 
 const login = async (req, res, next) => {
   try {
-    const user = await tables.user.getByEmail(req.body.email);
+    const user = await tables.user.getByPseudo(req.body.pseudo);
+
+    if (!user[0] || !user[0].profileActive) {
+      res.status(400).send("Incorrect pseudo or password");
+      return;
+    }
 
     const verified = await argon2.verify(
-      user[0].hashed_password,
+      user[0].hashedPassword,
       req.body.password
     );
 
     if (verified) {
       // Respond with the user in JSON format (but without the hashed password)
-      delete user[0].hashed_password;
+      delete user[0].hashedPassword;
 
       const token = await jwt.sign(
         { sub: user[0].id },
@@ -23,6 +28,7 @@ const login = async (req, res, next) => {
           expiresIn: "1h",
         }
       );
+
       res.json({
         token,
         user: user[0],
@@ -35,7 +41,7 @@ const login = async (req, res, next) => {
   }
 };
 
-const signin = async (req, res, next) => {
+const signIn = async (req, res, next) => {
   try {
     const { pseudo, email, hashedPassword, profileActive } = req.body;
 
@@ -56,7 +62,7 @@ const signin = async (req, res, next) => {
       };
 
       const token = await jwt.sign(
-        { sub: newUser.id, admin: newUser.admin },
+        { sub: newUser.id },
         process.env.APP_SECRET,
         {
           expiresIn: "1h",
@@ -65,8 +71,6 @@ const signin = async (req, res, next) => {
 
       res.status(201).json({
         token,
-        pseudo: newUser.pseudo,
-        email: newUser.email,
       });
     } else {
       res.sendStatus(400);
@@ -97,6 +101,6 @@ const getByToken = async (req, res) => {
 
 module.exports = {
   login,
-  signin,
+  signIn,
   getByToken,
 };

@@ -25,7 +25,7 @@ CREATE TABLE bubble (
 );
 
 INSERT INTO user (pseudo, email, hashedPassword, profileActive) VALUES (
-    "manu", "ebonoli@hotmail.fr", "blabla",1
+    "MajorManu", "ebonoli@hotmail.fr", "$argon2id$v=19$m=19456,t=2,p=1$tsOjbJrwYZLwn/2Gk04gbQ$hGa6IFHIrW5mRKh+tA8gmV9VhbFljJh2Y25hprnlQs4",1
 );
 
 INSERT INTO settings (choiceCharacter, space1Bag, space2Bag, userId) VALUES(
