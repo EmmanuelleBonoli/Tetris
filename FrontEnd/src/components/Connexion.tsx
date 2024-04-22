@@ -1,40 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PropTypes } from "prop-types";
+import { useService } from "../services/Injection";
+import { UserService } from "../services/UserService";
 
-export default function Connexion({ onClose }) {
+export function Connexion() {
+  const userService = useService(UserService);
+
   const navigate = useNavigate();
-  const [motDePasseVisible, setMotDePasseVisible] = useState(false);
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
-  const [errorLogin, setErrorLogin] = useState("");
+
+  const [motDePasseVisible, setMotDePasseVisible] = useState<boolean>(false);
+  const [inputPseudo, setInputPseudo] = useState<string>("");
+  const [inputPassword, setInputPassword] = useState<string>("");
+  const [errorLogin, setErrorLogin] = useState<string>("");
 
   const toggleMotDePasseVisibility = () => {
     setMotDePasseVisible(!motDePasseVisible);
   };
 
-  const handleConnexion = async (e) => {
+  const handleConnexion = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const userlogin = {
-      email: inputEmail,
-      password: inputPassword,
-    };
 
     try {
-      const dataUser = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/login`,
-        userlogin,
-      );
-
-      const userLocal = {
-        token: dataUser.data.token,
-      };
-
-      document.cookie = `token=${dataUser.data.token}; expires=${new Date(
-        Date.now() + 7 * 24 * 60 * 60 * 1000,
-      ).toUTCString()}; path=/`; // Expiration après 7 jours
-
-      onClose();
+      await userService.login(inputPseudo, inputPassword);
       navigate("/game");
     } catch (error) {
       setErrorLogin("Identifiants incorrects, veuillez réessayer.");
@@ -42,7 +29,7 @@ export default function Connexion({ onClose }) {
   };
 
   return (
-    <div className="container-connexion" onClick={onClose} role="presentation">
+    <div className="container-connexion">
       <div
         className="connexion-form"
         role="presentation"
@@ -64,11 +51,13 @@ export default function Connexion({ onClose }) {
           )}
         </div>
         <form onSubmit={handleConnexion} className="login-container">
-          <p>Entrez votre Email</p>
+          <p>Entrez votre Pseudo</p>
           <input
             type="text"
             className="pseudo"
-            onInput={(event) => setInputEmail(event.target.value)}
+            onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setInputPseudo(event.target.value)
+            }
           />
 
           <p>Entrez votre mot de passe</p>
@@ -76,7 +65,9 @@ export default function Connexion({ onClose }) {
             <input
               type={motDePasseVisible ? "text" : "password"}
               className="motdepasse"
-              onInput={(event) => setInputPassword(event.target.value)}
+              onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setInputPassword(event.target.value)
+              }
             />
             <img
               src={
@@ -98,7 +89,3 @@ export default function Connexion({ onClose }) {
     </div>
   );
 }
-
-Connexion.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};

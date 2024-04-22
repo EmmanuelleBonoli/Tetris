@@ -1,9 +1,10 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App.tsx";
-import { Home } from "./pages/Home.tsx";
-import { GamePage } from "./pages/GamePage.tsx";
-import { ProtectedRoute } from "./services/ProtectedRoute.tsx";
+import App from "./App";
+import { Home } from "./pages/Home";
+import { GamePage } from "./pages/GamePage";
+import { ProtectedRoute } from "./services/ProtectedRoute";
+import { Context, ServiceContext } from "./services/Injection";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   },
 ]);
 
+const context = new Context();
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />,
+  <ServiceContext.Provider value={context}>
+    <RouterProvider router={router} />
+  </ServiceContext.Provider>
 );

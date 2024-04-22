@@ -1,8 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
-
 GamePage.propTypes = {};
 
-export function GamePage(props) {
-  return <div>GamePage</div>;
+export function GamePage() {
+  return (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        // display: "flex",
+        // flexDirection: "column",
+        backgroundColor: "#2C4C14",
+      }}
+    >
+      <h1>game dfzef</h1>
+      GamePage ozandoiadn dzedze zdad
+    </div>
+  );
 }

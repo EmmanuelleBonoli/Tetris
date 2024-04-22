@@ -15,7 +15,7 @@ const { hashPassword, verifyToken } = require("./services/auth");
 const userControllers = require("./controllers/userControllers");
 
 router.post("/user/login", userControllers.login);
-router.post("/user/signin", hashPassword, userControllers.signin);
+router.post("/user/signIn", hashPassword, userControllers.signIn);
 // /* ************************************************************************* */
 
 router.use(verifyToken);

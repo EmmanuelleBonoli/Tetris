@@ -7,26 +7,19 @@ class UserManager extends AbstractManager {
 
   // The C of CRUD - Create operation
 
-  async create({
-    lastName,
-    firstName,
-    email,
-    hashedPassword,
-    image,
-    enterprise,
-  }) {
+  async create({ pseudo, email, hashedPassword, profileActive }) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (lastName, firstName, email, hashed_password, image, enterprise) values (?,?,?,?,?,?)`,
-      [lastName, firstName, email, hashedPassword, image, enterprise]
+      `insert into ${this.table} (pseudo, email, hashedPassword, profileActive) values (?,?,?,?)`,
+      [pseudo, email, hashedPassword, profileActive]
     );
 
     return result;
   }
 
-  async getByEmail(email) {
+  async getByPseudo(pseudo) {
     const [result] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE email = ?`,
-      [email]
+      `SELECT * FROM ${this.table} WHERE pseudo = ?`,
+      [pseudo]
     );
     return result;
   }
