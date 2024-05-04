@@ -12,7 +12,7 @@ export function GamePage() {
       }}
     >
       <h1>game dfzef</h1>
-      GamePage ozandoiadn dzedze zdad
+      GamePage
     </div>
   );
 }

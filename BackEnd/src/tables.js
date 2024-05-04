@@ -4,16 +4,10 @@
 
 // Import the manager modules responsible for handling data operations on the tables
 const UserManager = require("./models/UserManager");
-// const AppointmentManager = require("./models/AppointmentManager");
-// const MeetingManager = require("./models/MeetingManager");
-// const CoworkerManager = require("./models/CoworkerManager");
+const GameManager = require("./models/GameManager");
+const BubbleManager = require("./models/BubbleManager");
 
-const managers = [
-  UserManager,
-  // AppointmentManager,
-  // CoworkerManager,
-  // MeetingManager,
-];
+const managers = [UserManager, GameManager, BubbleManager];
 
 // Create an empty object to hold data managers for different tables
 const tables = {};

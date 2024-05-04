@@ -4,7 +4,9 @@ import App from "./App";
 import { Home } from "./pages/Home";
 import { GamePage } from "./pages/GamePage";
 import { ProtectedRoute } from "./services/ProtectedRoute";
-import { Context, ServiceContext } from "./services/Injection";
+import { MyContext } from "./services/Injection";
+import { ServiceContext } from "./services/ServiceContext";
+
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const context = new Context();
+const context = new MyContext();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ServiceContext.Provider value={context}>

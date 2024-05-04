@@ -9,17 +9,25 @@ const { hashPassword, verifyToken } = require("./services/auth");
 /* ************************************************************************* */
 
 // Import itemControllers module for handling item-related operations
-// const appointmentControllers = require("./controllers/appointmentControllers");
-// const coWorkerControllers = require("./controllers/coWorkerControllers");
-// const meetingControllers = require("./controllers/meetingControllers");
 const userControllers = require("./controllers/userControllers");
+const gameControllers = require("./controllers/gameControllers");
+const bubbleControllers = require("./controllers/bubbleControllers");
 
 router.post("/user/login", userControllers.login);
 router.post("/user/signIn", hashPassword, userControllers.signIn);
+
+router.get("/user/validityToken", userControllers.checkValidityToken);
+
 // /* ************************************************************************* */
 
 router.use(verifyToken);
+
 router.get("/user/userbytoken", userControllers.getByToken);
+
+router.get("/game/getGameUser", gameControllers.getGame);
+router.get("/game/allBubbles/:id", bubbleControllers.getAllBubbles);
+router.put("/game/newGame", gameControllers.newGame);
+
 // router.get("/user/checkExistence", userControllers.checkExistence);
 // router.get(
 //   "/appointment/Allappointments/:id",
