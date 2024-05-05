@@ -29,10 +29,10 @@ INSERT INTO bubble (stageLife,color, positionLine, positionColumn,bubblesMatch,b
 ),(
      "waiting", "red", null, null,null,null,1
 ),(
-     "falling", "red", 10, 4,null,null,1
+     "falling", "red", 1, 4,null,null,1
 ), 
-( "falling", "blue", 9, 4,null,null,1),
-( "stopping", "red", 1, 1,null,null,1);
+( "falling", "blue", 2, 4,null,null,1),
+( "stopping", "red", 10, 1,null,null,1);
 
 UPDATE bubble SET bubblePartner = 2 WHERE id = 1;
 UPDATE bubble SET bubblePartner = 1 WHERE id = 2;

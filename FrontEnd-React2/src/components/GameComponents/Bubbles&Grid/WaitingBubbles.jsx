@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useOnMount, useService } from "../../assets/ServiceContext";
-import { GameService } from "../../services/GameService";
-import { bubblesData } from "../Common/BubblesData";
+// import { useService } from "../../../assets/ServiceContext";
+// import { GameService } from "../../../services/GameService";
+import { bubblesData } from "../../Common/BubblesData";
 
 export function WaitingBubbles({ bubblesWaiting }) {
-  const gameService = useService(GameService);
+  // const gameService = useService(GameService);
 
   const [bubbles, setBubbles] = useState([]);
 
@@ -18,7 +18,7 @@ export function WaitingBubbles({ bubblesWaiting }) {
     <div
       style={{
         backgroundColor: "black",
-        width:"80%",
+        width: "80%",
         height: "20%",
         display: "flex",
         flexDirection: "column",
@@ -30,7 +30,7 @@ export function WaitingBubbles({ bubblesWaiting }) {
         const findUrl = bubblesData.find((bbl) => bbl.color === bubble.color);
         return (
           <img
-            style={{ height: "35%", padding:"5%" }}
+            style={{ height: "35%", padding: "5%" }}
             key={bubble.id}
             src={findUrl.img}
             alt=""

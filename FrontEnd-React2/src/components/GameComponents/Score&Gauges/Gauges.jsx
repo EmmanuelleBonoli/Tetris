@@ -24,8 +24,8 @@ export function Gauges({ levelOil, levelOxygen }) {
         alignItems: "center",
       }}
     >
-      <GaugeFuel />
-      <GaugeOxygen />
+      <GaugeFuel oil={oil}/>
+      <GaugeOxygen oxygen={oxygen}/>
     </div>
   );
 }

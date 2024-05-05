@@ -25,8 +25,9 @@ router.use(verifyToken);
 router.get("/user/userbytoken", userControllers.getByToken);
 
 router.get("/game/getGameUser", gameControllers.getGame);
-router.get("/game/allBubbles/:id", bubbleControllers.getAllBubbles);
+router.get("/bubble/allBubbles/:id", bubbleControllers.getAllBubbles);
 router.put("/game/newGame", gameControllers.newGame);
+router.put("/bubble/updatedBubble", bubbleControllers.updatedBubble);
 
 // router.get("/user/checkExistence", userControllers.checkExistence);
 // router.get(

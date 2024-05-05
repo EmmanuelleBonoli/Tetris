@@ -22,7 +22,7 @@ export function Connexion({ setUserConnected, setConnectUser, setGameUser }) {
     try {
       await userService.login(inputPseudo, inputPassword);
       setUserConnected(true)
-      setGameUser(await gameService.getGame());
+      await setGameUser(await gameService.getGame());
       setConnectUser(false)
     } catch (error) {
       setErrorLogin("Identifiants incorrects, veuillez réessayer.");

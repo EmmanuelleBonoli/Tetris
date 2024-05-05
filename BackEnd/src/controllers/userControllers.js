@@ -25,7 +25,7 @@ const login = async (req, res, next) => {
         { sub: user[0].id },
         process.env.APP_SECRET,
         {
-          expiresIn: "1h",
+          expiresIn: "24h",
         }
       );
 
@@ -65,7 +65,7 @@ const signIn = async (req, res, next) => {
         { sub: newUser.id },
         process.env.APP_SECRET,
         {
-          expiresIn: "1h",
+          expiresIn: "24h",
         }
       );
 

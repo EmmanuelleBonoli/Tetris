@@ -1,13 +1,14 @@
-export function GameArea() {
+import { forwardRef, useImperativeHandle } from "react";
+import PropTypes from "prop-types";
+import FallingBubbles from "./FallingBubbles";
+import StoppedBubbles from "./StoppedBubbles";
 
+export const BubblesGrid = forwardRef(function BubblesGrid({ fallingBubbles, stoppedBubbles }, ref) {
   // à revoir, à supprimer quand plus besoin
   const generateGridCells = () => {
     const cells = [];
-    // Boucler pour créer 10 lignes
     for (let i = 0; i < 10; i++) {
-      // Boucler pour créer 6 cellules par ligne
       for (let j = 0; j < 7; j++) {
-        // Ajouter chaque cellule à la liste des cellules
         cells.push(
           <div
             key={`${i}-${j}`}
@@ -42,11 +43,19 @@ export function GameArea() {
           gridTemplateRows: "repeat(10, 1fr)",
           gridColumnGap: "0px",
           gridRowGap: "0px",
-          border: "1px solid red",
+          position: "relative",
         }}
+    
       >
         {generateGridCells()}
+        <FallingBubbles fallingBubbles={fallingBubbles || []} />
+        <StoppedBubbles stoppedBubbles={stoppedBubbles || []} />
       </div>
     </div>
   );
-}
+})
+
+BubblesGrid.propTypes = {
+  fallingBubbles: PropTypes.array,
+  stoppedBubbles: PropTypes.array,
+};
