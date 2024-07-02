@@ -10,8 +10,19 @@ export function BannerAnimated() {
         height: "15%",
         width: "100%",
         backgroundColor: "black",
+        position: "relative",
       }}
     >
+      <img
+        src="/images/Home/astro.png"
+        style={{
+          position: "absolute",
+          top: "20%",
+          left: "10%",
+          height: "60%",
+          animation: "astroFlying 3s infinite",
+        }}
+      />
       <style>
         {`
             @keyframes flying {
@@ -21,6 +32,13 @@ export function BannerAnimated() {
              
             }
         `}
+             {`
+             @keyframes astroFlying {
+                0% { transform: rotate(20deg) }
+                50% { transform:  translateX(5vw) rotate(50deg)}
+                100% { transform: rotate(20deg); }
+            }
+        `} 
       </style>
     </div>
   );

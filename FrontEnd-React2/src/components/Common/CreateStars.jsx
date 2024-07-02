@@ -1,17 +1,17 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+// import { useEffect, useState } from "react";
+// import { useLocation } from "react-router-dom";
 
 export function CreateStars({ startX, startY }) {
-  const location = useLocation();
+  // const location = useLocation();
 
-  const [addAnim, setAddAnim] = useState("");
+  // const [addAnim, setAddAnim] = useState("");
 
-  useEffect(() => {
-    if (location.pathname.includes("game")) {
-      setAddAnim("flyingStars 3s infinite");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (location.pathname.includes("game")) {
+  //     setAddAnim("flyingStars 3s infinite");
+  //   }
+  // }, []);
 
   const numStars = 250;
   const stars = [];
@@ -33,7 +33,9 @@ export function CreateStars({ startX, startY }) {
           height: `${size}px`,
           backgroundColor: "#FEDA24",
           borderRadius: "50%",
-          animation: `twinkle 1s infinite ease-in-out ${delay}s, ${addAnim}`,
+          animation: `twinkle 1s infinite ease-in-out ${delay}s
+  
+          `,
         }}
       />
     );
@@ -45,7 +47,7 @@ export function CreateStars({ startX, startY }) {
       <style>
         {`
              @keyframes twinkle {
-             0%, 100% { opacity: 0.5; }
+             0%, 100% { opacity: 0.4; }
              50% { opacity: 1; }
             }
         `}

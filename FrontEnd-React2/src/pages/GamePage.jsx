@@ -22,6 +22,7 @@ export function GamePage() {
   const gridBubblesRef = useRef(null);
   const startX = useRef(null);
   const startY = useRef(null);
+  const fallingBubblesRef = useRef([]);
 
   useOnMount(async () => {
     const updatedGameUser = await gameService.getGame();
@@ -50,44 +51,52 @@ export function GamePage() {
 
   // à revoir : useEffect pour automatiser la chute des bubbles
 
-  // useEffect(() => {
-  //   if (startGame) {
-  //     const fallingDownBubbles = async () => {
-  //       let arrayOfUpdatedBubble = [];
-  //       for (let i = 0; i < fallingBubbles.length; i++) {
-  //         let updatedBubble = { ...fallingBubbles[i] };
-  //         if (updatedBubble.positionLine < 10) {
-  //           updatedBubble = {
-  //             ...updatedBubble,
-  //             positionLine: updatedBubble.positionLine + 1,
-  //           };
-  //         } else {
-  //           updatedBubble = {
-  //             ...updatedBubble,
-  //             stageLife: "stopping",
-  //           };
-  //         }
-  //         arrayOfUpdatedBubble.push(updatedBubble);
-  //       }
+    useEffect(()=>{
+      let intervalId;
+      if(startGame){
+        const fallingDownBubbles = async () => {
+          let arrayOfUpdatedBubble = [];
+          console.log("arrayUpdated start", arrayOfUpdatedBubble);
 
-  //       await gameService.updatedBubble(arrayOfUpdatedBubble);
-  //       await getAllBubbles(gameUser.id);
-  //     };
+          const bubblesToIterate = fallingBubblesRef.current.length ? fallingBubblesRef.current : fallingBubbles;
 
-  //     const intervalFalling = setInterval(fallingDownBubbles, 1000);
+          for (let i = 0; i <  bubblesToIterate.length; i++) {
+            let updatedBubble = bubblesToIterate[i];
+            console.log("updatedBubble", updatedBubble);
+            if (updatedBubble.positionLine < 10) {
+              updatedBubble = {
+                ...updatedBubble,
+                positionLine: updatedBubble.positionLine + 1,
+              };
+            } else {
+              updatedBubble = {
+                ...updatedBubble,
+                stageLife: "stopped",
+              };
+            }
+            arrayOfUpdatedBubble.push(updatedBubble);
+          }
+          fallingBubblesRef.current = arrayOfUpdatedBubble
+          console.log("arrayUpdated final", arrayOfUpdatedBubble);
+          await gameService.updatedBubble(arrayOfUpdatedBubble);
+          setFallingBubbles(arrayOfUpdatedBubble);
+          // await getAllBubbles(gameUser.id);
+          clearInterval(intervalId);
+        };
+         intervalId = setInterval(fallingDownBubbles, 1000);
 
-  //     return () => {
-  //       clearInterval(intervalFalling);
-  //     };
-  //   }
-  // }, [startGame]);
+      }else{
+        clearInterval(intervalId);
+      }
+
+  },[startGame])
 
   const getAllBubbles = async (GameUserId) => {
     const updatedGridBubbles = await gameService.getAllBubbles(GameUserId);
     setGridBubbles(updatedGridBubbles || []);
 
     setFallingBubbles(updatedGridBubbles.falling || []);
-    setStopBubbles(updatedGridBubbles.stopping || []);
+    setStopBubbles(updatedGridBubbles.stopped || []);
   };
 
   const handleRotateBubble = async () => {
@@ -135,8 +144,10 @@ export function GamePage() {
       }
       let arrayOfUpdatedPositionBubble = [];
       arrayOfUpdatedPositionBubble.push(updatedPositionBubble);
-
+ 
       await gameService.updatedBubble(arrayOfUpdatedPositionBubble);
+      arrayOfUpdatedPositionBubble.push(fallingBubbles[1])
+      fallingBubblesRef.current = arrayOfUpdatedPositionBubble;
       await getAllBubbles(gameUser.id);
     }
   };
@@ -171,6 +182,7 @@ export function GamePage() {
         arrayOfUpdatedBubble[0].positionLine < 11 &&
         arrayOfUpdatedBubble[1].positionLine < 11
       ) {
+        fallingBubblesRef.current = arrayOfUpdatedBubble;
         await gameService.updatedBubble(arrayOfUpdatedBubble);
         await getAllBubbles(gameUser.id);
       }
@@ -184,6 +196,7 @@ export function GamePage() {
           };
           arrayOfUpdatedBubble.push(updatedBubble);
         }
+        fallingBubblesRef.current = arrayOfUpdatedBubble;
         await gameService.updatedBubble(arrayOfUpdatedBubble);
         await getAllBubbles(gameUser.id);
       } else {
@@ -195,6 +208,7 @@ export function GamePage() {
           };
           arrayOfUpdatedBubble.push(updatedBubble);
         }
+        fallingBubblesRef.current = arrayOfUpdatedBubble;
         await gameService.updatedBubble(arrayOfUpdatedBubble);
         await getAllBubbles(gameUser.id);
       }
