@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useService } from "../services/Injection";
+import { useService } from "../services/ServiceContext";
 import { UserService } from "../services/UserService";
 
 export function Signin() {
@@ -46,7 +46,7 @@ export function Signin() {
 
       if (signinUserSucced.status === 201) {
         setInscription("Inscription réussie !");
-        navigate("/");
+        navigate("/game");
       } else {
         setInscription("Veuillez remplir tous les champs.");
       }

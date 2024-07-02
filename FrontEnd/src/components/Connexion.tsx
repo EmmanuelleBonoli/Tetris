@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useService } from "../services/Injection";
+import { useService } from "../services/ServiceContext";
 import { UserService } from "../services/UserService";
+import { UserService as UserServiceType } from "../services/Typage/TypeUserService";
 
 export function Connexion() {
-  const userService = useService(UserService);
+  const userService: UserServiceType = useService(UserService);
 
   const navigate = useNavigate();
 
